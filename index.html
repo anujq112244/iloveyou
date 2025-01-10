@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Do You Love Me?</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
@@ -13,147 +17,209 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            padding: 0;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5);
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite;
+            position: relative;
             overflow: hidden;
         }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         h1 {
+            font-size: 8vw; /* Adjusted font size for mobile */
+            font-weight: 700;
             color: #fff;
-            font-size: 3rem;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-            animation: pulse 2s infinite;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            animation: fadeIn 3s ease-in-out;
+            word-wrap: break-word;
         }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .buttons {
-            margin-top: 30px;
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            animation: fadeInUp 2s ease-in-out forwards;
         }
+
         button {
-            padding: 15px 30px;
-            font-size: 20px;
+            padding: 12px 24px; /* Adjusted padding */
+            font-size: 5vw; /* Adjusted font size */
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-        .yes {
-            background-color: #4caf50;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            text-transform: uppercase;
+            width: 60%; /* Adjusted width */
+            background: linear-gradient(45deg, #ff6ec4, #7873f5);
             color: white;
         }
-        .yes:hover {
-            background-color: #45a049;
-            transform: scale(1.1);
+
+        button:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            animation: buttonGlow 1s infinite ease-in-out;
         }
-        .no {
-            background-color: #f44336;
-            color: white;
+
+        @keyframes buttonGlow {
+            0% { box-shadow: 0 0 15px #ff6ec4, 0 0 25px #ff6ec4; }
+            50% { box-shadow: 0 0 25px #7873f5, 0 0 40px #7873f5; }
+            100% { box-shadow: 0 0 15px #ff6ec4, 0 0 25px #ff6ec4; }
         }
-        .no:hover {
-            background-color: #e53935;
-            transform: scale(1.1);
-        }
+
         #message {
-            margin-top: 40px;
-            font-size: 22px;
+            font-size: 6vw; /* Adjusted font size */
+            font-weight: bold;
             color: #fff;
+            margin-top: 20px;
+            opacity: 0;
+            text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            animation: revealMessage 3s ease-in-out forwards;
             text-align: center;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in-out;
+            word-wrap: break-word;
         }
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+
+        @keyframes revealMessage {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        .floating-heart {
+
+        .particles {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle at 30% 30%, #ff6a6a, #ff3d3d);
-            transform: rotate(45deg);
-            animation: floatHeart 5s infinite ease-in-out;
-        }
-        .floating-heart::before,
-        .floating-heart::after {
-            content: '';
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle at 30% 30%, #ff6a6a, #ff3d3d);
-            border-radius: 50%;
-        }
-        .floating-heart::before {
-            top: -60px;
-            left: 0;
-        }
-        .floating-heart::after {
             top: 0;
-            left: -60px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
         }
-        @keyframes floatHeart {
-            0%, 100% {
-                transform: translateY(0) rotate(45deg);
-            }
-            50% {
-                transform: translateY(-30px) rotate(45deg);
-            }
-        }
-        .heart-container {
+
+        .particle {
             position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: -1;
-            display: flex;
-            gap: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: particleAnim 2s infinite ease-in-out;
+        }
+
+        @keyframes particleAnim {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            display: none;
+            z-index: 100;
+        }
+
+        .confetti span {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #ffcc00, #ff3300);
+            animation: confettiFall 2s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(45deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 10vw; /* Increased font size for very small screens */
+            }
+            button {
+                font-size: 6vw; /* Adjusted font size */
+                width: 70%; /* Adjusted width */
+            }
         }
     </style>
 </head>
 <body>
-    <div class="heart-container">
-        <div class="floating-heart"></div>
-        <div class="floating-heart" style="animation-delay: 1s;"></div>
-        <div class="floating-heart" style="animation-delay: 2s;"></div>
-    </div>
-    <h1>Do You Love Me?</h1>
+    <h1>Do You Love Me 💐🤗?</h1>
     <div class="buttons">
         <button class="yes" onclick="showYesMessage()">Yes</button>
         <button class="no" onclick="showNoMessage()">No</button>
     </div>
     <div id="message"></div>
+    <div class="confetti" id="confetti"></div>
+    <div class="particles" id="particles"></div>
 
     <script>
-        let noClickCount = 0;
+        let noClickedCount = 0;
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.getElementById('particles').appendChild(particle);
+            }
+        }
 
         function showYesMessage() {
-            document.getElementById('message').innerText = "I knew it! ❤️";
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('h1').style.display = 'none';
+            document.body.style.background = "linear-gradient(135deg, #ff4b5c, #ff6392)"; // Romantic background
+
+            const message = document.getElementById('message');
+            message.style.opacity = '1';
+            message.innerText = "I love you so much, Chudail Jii! 😘❤️";
+            message.style.animation = "revealMessage 2s ease-out";
+
+            const confettiContainer = document.getElementById('confetti');
+            confettiContainer.style.display = 'block';
+            for (let i = 0; i < 100; i++) {
+                let confettiPiece = document.createElement('span');
+                confettiPiece.style.left = Math.random() * 100 + 'vw';
+                confettiPiece.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+
+            createParticles();
         }
 
         function showNoMessage() {
-            noClickCount++;
-            const messages = [
-                "Soch lo... 🤔",
-                "Kya sach me nahi karti? 😢",
-                "Last chance to change your mind! 😟",
-                "Acha thik hai, tumhari marzi... 😔"
-            ];
-            
-            if (noClickCount <= messages.length) {
-                document.getElementById('message').innerText = messages[noClickCount - 1];
-            } else {
-                document.getElementById('message').innerText = "Okay, I respect your decision. 😞";
+            const message = document.getElementById('message');
+            noClickedCount++;
+
+            if (noClickedCount === 1) {
+                message.innerText = "Soch le Re... 🤔";
+            } else if (noClickedCount === 2) {
+                message.innerText = "Kya sach me nahi karti? 😢";
+            } else if (noClickedCount === 3) {
+                message.innerText = "Ek baar karke dekh... 😔";
+            } else if (noClickedCount === 4) {
+                message.innerText = "Are ab yes bhi daba de ab pagal! 😜";
             }
+
+            message.style.opacity = '1';
         }
     </script>
 </body>
